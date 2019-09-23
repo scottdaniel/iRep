@@ -91,6 +91,16 @@ def plot_coverage_gc(sample, avg_cov, length, kept_windows, title, show = False)
         fig, ax1 = plt.subplots()
     GC = sample['GC']
     COV = sample['Fwindows']
+    #TAG: Scott's custom code
+    #thingy to write out raw data that I want
+    #hijacking the "do you want a pickle?" argument from user
+    if pickle is not False:
+        tsv_out = '%s.tsv' % (out.rsplit('.', 1)[0])
+        tsv_out = open(tsv_out, 'wb')
+        d = {'GC':GC, 'COV':COV}
+        df = pd.DataFrame(d)
+        df.to_csv(tsv_out, sep='\t')
+        tsv_out.close()
     if len(GC[0]) < 100:
         return False
     # plot cov. vs. gc
